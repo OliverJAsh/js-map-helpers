@@ -10,9 +10,19 @@ export const reduceMap = <Key, Value, Acc>(
         initial,
     );
 
-export const mapMap = <Key, ValueA, ValueB>(fn: (value: ValueA, key: Key) => ValueB) => (
-    map: Map<Key, ValueA>,
-): Map<Key, ValueB> =>
+type StringDictionary<Value> = { [key: string]: Value };
+
+export const toStringDictionary = <Value>(
+    map: Map<string, Value>,
+): StringDictionary<Value> =>
+    reduceMap<string, Value, StringDictionary<Value>>((acc, value, key) => {
+        acc[key] = value;
+        return acc;
+    }, {})(map);
+
+export const mapMap = <Key, ValueA, ValueB>(
+    fn: (value: ValueA, key: Key) => ValueB,
+) => (map: Map<Key, ValueA>): Map<Key, ValueB> =>
     reduceMap<Key, ValueA, Map<Key, ValueB>>(
         (acc, value, key) => acc.set(key, fn(value, key)),
         new Map<Key, ValueB>(),
