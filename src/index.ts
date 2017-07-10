@@ -33,8 +33,9 @@ export const appendMap = <Key, Value>(
     map2: Map<Key, Value>,
 ): Map<Key, Value> => new Map([...map1, ...map2]);
 
-export const concatMap = <Key, Value>(maps: Map<Key, Value>[]): Map<Key, Value> =>
-    maps.reduce(appendMap, new Map<Key, Value>());
+export const concatMap = <Key, Value>(
+    maps: Map<Key, Value>[],
+): Map<Key, Value> => maps.reduce(appendMap, new Map<Key, Value>());
 
 // Examples
 
